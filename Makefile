@@ -595,6 +595,19 @@ GCC_TOOLCHAIN_DIR := $(dir $(shell which $(CROSS_COMPILE)elfedit))
 CLANG_FLAGS	+= --prefix=$(GCC_TOOLCHAIN_DIR)$(notdir $(CROSS_COMPILE))
 endif
 CLANG_FLAGS	+= -Werror=unknown-warning-option
+
+# Use arch specific optimization
+CLANG_FLAGS	+= \
+	-mcpu=cortex-a76 \
+	-mllvm -polly \
+	-mllvm -polly-ast-use-context \
+	-mllvm -polly-detect-keep-going \
+	-mllvm -polly-invariant-load-hoisting \
+	-mllvm -polly-loopfusion-greedy \
+	-mllvm -polly-run-dce \
+	-mllvm -polly-run-inliner \
+	-mllvm -polly-vectorizer=stripmine
+
 KBUILD_CFLAGS	+= $(CLANG_FLAGS)
 KBUILD_AFLAGS	+= $(CLANG_FLAGS)
 export CLANG_FLAGS
