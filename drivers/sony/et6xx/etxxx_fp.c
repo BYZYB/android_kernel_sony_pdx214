@@ -505,7 +505,7 @@ static int vreg_setup(struct egistec_data *egistec, bool enable, bool enable_3_8
 			DEBUG_PRINT("[egis] %s already enable ! \n", __func__);
 			return 0;
 		}
-		regulator_enable(egistec->vcc);
+		(void)regulator_enable(egistec->vcc);
 		DEBUG_PRINT("[egis] %s regulator enable ! \n", __func__);
 		egistec->power_enable = true;
 
